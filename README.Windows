@@ -1,8 +1,9 @@
 Building Polipo on Windows
 ==========================
 
-There are two distinct ports of Polipo to Windows -- a port using the
-Cygwin emulation libraries, and an experimental native port using Mingw.
+There are three distinct ports of Polipo to Windows -- a port using the
+Cygwin emulation libraries, an experimental native port using Mingw,
+and a Visual Studio 2013 port mashup that builds on Mingw.
 
 The Cygwin port is identical to the Unix binary.  Build it just like
 you would build under Unix -- just type ``make all'' in the directory
@@ -21,12 +22,28 @@ to point make at the right compiler:
 
     make EXE=.exe CC=i586-mingw32msvc-gcc LDLIBS=-lwsock32
 
+In order to build with Visual Studio 2013:
+
+    mkdir <srcroot>\..\build
+    pushd <srcroot>\..\build
+    cmake -G "Visual Studio 12" <srcroot>
+    cmake --build .
+
+The Visual Studio port has been configured to use the directories:
+
+    C:\ProgramData\polipo\www
+    C:\ProgramData\polipo\cache
+
+These directories won't exist on some systems, and won't exist by default.
+Polipo will run, but with disc caching and web interface disabled.
+
 The native port currently attempts to access files in locations that
 are typical for a Unix system; for example, it will attempt to read a
-configuration file /etc/polipo/config on the current drive.  You will
-probably need to point it at your config file with an explicit ``-c''
-command-line argument, and define at least the following configuration
-variables:
+configuration file /etc/polipo/config on the current drive.
+
+In both these cases, you will probably need to point it at your config file
+with an explicit ``-c'' command-line argument, and define at least the
+following configuration variables:
 
     dnsNameServer
     diskCacheRoot
