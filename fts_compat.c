@@ -41,6 +41,14 @@ THE SOFTWARE.
 
 #include "fts_compat.h"
 
+/* disccache also defines this macro. There should be a common place. -epu */
+#ifndef S_ISDIR
+#define S_ISDIR(mode)  (((mode) & S_IFMT) == S_IFDIR)
+#endif
+#ifndef S_ISREG
+#define S_ISREG(mode)  (((mode) & S_IFMT) == S_IFREG)
+#endif
+
 static char *
 getcwd_a()
 {
