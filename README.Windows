@@ -22,7 +22,8 @@ to point make at the right compiler:
 
     make EXE=.exe CC=i586-mingw32msvc-gcc LDLIBS=-lwsock32
 
-In order to build with Visual Studio 2013:
+In order to build with Visual Studio 2013, you will need to install
+cmake version 3.2 or greater. A debug build can be made like this:
 
     mkdir <srcroot>\..\build
     pushd <srcroot>\..\build
