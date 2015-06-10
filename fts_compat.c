@@ -32,6 +32,9 @@ THE SOFTWARE.
 #else
 #include "dirent_compat.h"
 #endif
+#ifdef _MSC_VER /*MSVC*/
+#include "msvc/unistd.h"
+#endif
 #include <sys/stat.h>
 #include <errno.h>
 #include <string.h>

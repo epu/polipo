@@ -25,7 +25,6 @@ set (SRCS
 		forbidden.c
 		md5import.c
 		md5.c
-		ftsimport.c
 		fts_compat.c
 		socks.c
 		mingw.c
@@ -36,8 +35,15 @@ if (MSVC)
 	add_definitions("-DWIN32")
 	if (CMAKE_GENERATOR MATCHES "Visual Studio 12")
 		# we could set HAS_STDINT_H instead of having modified the md5.h
-		add_definitions("-DHAS_STDINT_H")
+		add_definitions("-DHAS_STDINT_H" "-D_CRT_SECURE_NO_WARNINGS")
+		list(APPEND SRCS dirent_compat.c fts_compat.c msvc/getopt.c)
+		list(REMOVE_ITEM SRCS md5import.c)
 	endif()
 endif ()
 
 add_executable(polipo ${SRCS})
+
+if (MSVC)
+    # TODO: fix IDE projects to use the debug variant. -epu
+	target_link_libraries(polipo ws2_32 libcpmt msvcmrt)
+endif ()
