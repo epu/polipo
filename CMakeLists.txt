@@ -34,6 +34,10 @@ set (SRCS
 # CMAKE_SYSTEM_NAME MATCHES "Windows"
 if (MSVC)
 	add_definitions("-DWIN32")
+	if (CMAKE_GENERATOR MATCHES "Visual Studio 12")
+		# we could set HAS_STDINT_H instead of having modified the md5.h
+		add_definitions("-DHAS_STDINT_H")
+	endif()
 endif ()
 
 add_executable(polipo ${SRCS})

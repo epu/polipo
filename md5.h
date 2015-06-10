@@ -36,8 +36,6 @@
 #include <stdint.h>
 #elif defined(HAS_INTTYPES_H)
 #include <inttypes.h>
-#elif _MSC_VER >= 1800 /* MSVC 2013 */
-#include <stdint.h>
 #endif
 
 /* typedef a 32-bit type */
