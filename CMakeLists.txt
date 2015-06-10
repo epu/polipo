@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.2)
 
 project (polipo)
 
+if (MSVC)
+	set(LOCAL_ROOT "C:/ProgramData/polipo/www" CACHE FILEPATH "Default hard-coded path for serving web files.")
+	set(DISK_CACHE_ROOT "C:/ProgramData/polipo/cache" CACHE FILEPATH "Default hard-coded path for cache data.")
+endif ()
+
 set (SRCS
 		util.c
 		event.c
@@ -36,6 +41,8 @@ if (MSVC)
 	if (CMAKE_GENERATOR MATCHES "Visual Studio 12")
 		# we could set HAS_STDINT_H instead of having modified the md5.h
 		add_definitions("-DHAS_STDINT_H" "-D_CRT_SECURE_NO_WARNINGS")
+		add_definitions(-DLOCAL_ROOT="${LOCAL_ROOT}" -DDISK_CACHE_ROOT="${DISK_CACHE_ROOT}")
+
 		list(APPEND SRCS dirent_compat.c fts_compat.c msvc/getopt.c)
 		list(REMOVE_ITEM SRCS md5import.c)
 	endif()
