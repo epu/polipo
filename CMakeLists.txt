@@ -31,4 +31,9 @@ set (SRCS
 		mingw.c
 )
 
+# CMAKE_SYSTEM_NAME MATCHES "Windows"
+if (MSVC)
+	add_definitions("-DWIN32")
+endif ()
+
 add_executable(polipo ${SRCS})

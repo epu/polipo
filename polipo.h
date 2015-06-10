@@ -42,6 +42,9 @@ THE SOFTWARE.
 #else
 #include "dirent_compat.h"
 #endif
+#ifdef _MSC_VER /*MSVC*/
+#include "msvc/unistd.h"
+#endif
 #include <fcntl.h>
 #include <time.h>
 #include <sys/stat.h>
