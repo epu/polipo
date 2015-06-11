@@ -26,6 +26,14 @@ AtomPtr configFile = NULL;
 AtomPtr pidFile = NULL;
 int daemonise = 0;
 
+#ifndef POLIPO_USER_CONFIG
+#define POLIPO_USER_CONFIG "~/.polipo"
+#endif
+
+#ifndef POLIPO_GLOBAL_CONFIG
+#define POLIPO_GLOBAL_CONFIG "/etc/polipo/config"
+#endif
+
 static void
 usage(char *argv0)
 {
@@ -98,7 +106,7 @@ main(int argc, char **argv)
         configFile = expandTilde(configFile);
 
     if(configFile == NULL) {
-        configFile = expandTilde(internAtom("~/.polipo"));
+        configFile = expandTilde(internAtom(POLIPO_USER_CONFIG));
         if(configFile)
             if(access(configFile->string, F_OK) < 0) {
                 releaseAtom(configFile);
@@ -107,8 +115,8 @@ main(int argc, char **argv)
     }
 
     if(configFile == NULL) {
-        if(access("/etc/polipo/config", F_OK) >= 0)
-            configFile = internAtom("/etc/polipo/config");
+		if (access(POLIPO_GLOBAL_CONFIG, F_OK) >= 0)
+			configFile = internAtom(POLIPO_GLOBAL_CONFIG);
         if(configFile && access(configFile->string, F_OK) < 0) {
             releaseAtom(configFile);
             configFile = NULL;
